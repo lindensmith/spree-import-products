@@ -328,8 +328,9 @@ module Spree
       #The image can be fetched from an HTTP or local source - either method returns a Tempfile
       file = filename =~ /\Ahttp[s]*:\/\// ? fetch_remote_image(filename) : fetch_local_image(filename)
       #An image has an attachment (the image file) and some object which 'views' it
+      variant = Spree::Variant.find_by_product_id(product_or_variant.id)
       product_image = Spree::Image.new({:attachment => file,
-                                :viewable => product_or_variant,
+                                :viewable_id => variant.id,
                                 :position => product_or_variant.images.length
                                 })
 
